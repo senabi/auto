@@ -1,7 +1,7 @@
 #!/bin/sh
 
 
-FS="ext4"
+#FS="ext4"
 FS="btrfs"
 
 #Disk where partitions will be done
