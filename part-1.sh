@@ -9,19 +9,20 @@ echo "Reading $dirpath/variables.sh"
 . "$dirpath/variables.sh"
 
 PARTED="parted /dev/$DISK1"
+SPACER=";;;;;;;;;"
 
 
 LABEL_MSDOS="$PARTED mklabel msdos"
 LABEL_GPT="$PARTED mklabel gpt"
 [ $BIOS_TYPE = "bios" ] && \
   echo "$LABEL_MSDOS" && $LABEL_MSDOS && \
-  echo "<<*>><<*>><<*>> Label: MSDOS [done]" || \
-  echo "<<*>><<*>><<*>> Label: MSDOS [failed]"
+  echo "$SPACER Label: MSDOS [done]" || \
+  echo "$SPACER Label: MSDOS [failed]"
   
 [ $BIOS_TYPE = "uefi" ] && \
   echo "$LABEL_GPT" && $LABEL_GPT && \
-  echo "<<*>><<*>><<*>> Label: GPT [done]" || \ 
-  echo "<<*>><<*>><<*>> Label: GPT [failed]"
+  echo "$SPACER Label: GPT [done]" || \ 
+  echo "$SPACER Label: GPT [failed]"
 
 ## BOOT NO-SWAP
 # /boot = 1GiB
@@ -45,8 +46,8 @@ UEFI_MAKE_ROOTPART_FS="mkfs.$FS /dev/${DISK1}2"
   echo "$BIOS_MAKE_BOOTPART_FS" && $BIOS_MAKE_BOOTPART_FS && \
   echo "$BIOS_MAKE_ROOTPART" && $BIOS_MAKE_ROOTPART && \
   echo "$BIOS_MAKE_ROOTPART_FS" && $BIOS_MAKE_ROOTPART_FS && \
-  echo "<<*>><<*>><<*>> Partitions BIOS [done]" ||\
-  echo "<<*>><<*>><<*>> Partitions BIOS [failed]"
+  echo "$SPACER Partitions BIOS [done]" ||\
+  echo "$SPACER Partitions BIOS [failed]"
 
 [ $BIOS_TYPE = "uefi" ] && [ $OPTION = "alt-1" ] && \
   echo "$UEFI_MAKE_BOOTPART" && $UEFI_MAKE_BOOTPART && \
@@ -54,18 +55,18 @@ UEFI_MAKE_ROOTPART_FS="mkfs.$FS /dev/${DISK1}2"
   echo "$UEFI_MAKE_BOOTPART_FS" && $UEFI_MAKE_BOOTPART_FS && \
   echo "$UEFI_MAKE_ROOTPART" && $UEFI_MAKE_ROOTPART && \
   echo "$UEFI_MAKE_ROOTPART_FS" && $UEFI_MAKE_ROOTPART_FS \
-  echo "<<*>><<*>><<*>> Partitions UEFI [done]" || \
-  echo "<<*>><<*>><<*>> Partitions UEFI [failed]"
+  echo "$SPACER Partitions UEFI [done]" || \
+  echo "$SPACER Partitions UEFI [failed]"
 
-echo "<<*>><<*>><<*>> MOUNTING "
+echo "$SPACER MOUNTING "
 
 mount /dev/$ROOT_PART /mnt && \
   mkdir -p /mnt/boot && \
   mount /dev/$BOOT_PART /mnt/boot && \
-  echo "<<*>><<*>><<*>> Mounted partitions [done]" && \
+  echo "$SPACER Mounted partitions [done]" && \
     pacstrap /mnt base base-devel linux-lts linux-lts-headers linux-firmware && \
     MOUNTING="done" || \
-  echo "<<*>><<*>><<*>> Mounted partitions [failed]" && \
+  echo "$SPACER Mounted partitions [failed]" && \
     MOUNTING="failed" && umount -R /mnt 
 
 ## BOOT NO-SWAP
@@ -93,4 +94,4 @@ sleep 2
   arch-chroot /mnt /mnt/opt/part-2.sh && \
   umount -R /mnt
 
-echo "<<*>><<*>><<*>> If everything is OK reboot"
+echo "$SPACER If everything is OK reboot"
