@@ -11,15 +11,15 @@ echo "Reading $dirpath/variables.sh"
 PARTED="parted /dev/$DISK1"
 
 
-LABEL_MSDOS="parted /dev/$DISK1 mklabel msdos"
-LABEL_GPT="parted /dev/$DISK1 mklabel gpt"
+LABEL_MSDOS="$PARTED mklabel msdos"
+LABEL_GPT="$PARTED mklabel gpt"
 [ $BIOS_TYPE = "bios" ] && \
-  echo "$LABEL_MSDOS" && $($LABEL_MSDOS) && \
+  echo "$LABEL_MSDOS" && $LABEL_MSDOS && \
   echo "<<*>><<*>><<*>> Label: MSDOS [done]" || \
   echo "<<*>><<*>><<*>> Label: MSDOS [failed]"
   
 [ $BIOS_TYPE = "uefi" ] && \
-  echo "$LABEL_GPT" && $($LABEL_GPT) && \
+  echo "$LABEL_GPT" && $LABEL_GPT && \
   echo "<<*>><<*>><<*>> Label: GPT [done]" || \ 
   echo "<<*>><<*>><<*>> Label: GPT [failed]"
 
@@ -40,20 +40,20 @@ UEFI_MAKE_ROOTPART="$PARTED mkpart \"root partition\" $FS 1GiB 100%"
 UEFI_MAKE_ROOTPART_FS="mkfs.$FS /dev/${DISK1}2"
 
 [ $BIOS_TYPE = "bios" ] && [ $OPTION = "alt-1" ] && \
-  echo "$BIOS_MAKE_BOOTPART" && $($BIOS_MAKE_BOOTPART) && \
-  echo "$BIOS_SET_BOOT_ON" && $($BIOS_SET_BOOT_ON) && \
-  echo "$BIOS_MAKE_BOOTPART_FS" && $($BIOS_MAKE_BOOTPART_FS) && \
-  echo "$BIOS_MAKE_ROOTPART" && $($BIOS_MAKE_ROOTPART) && \
-  echo "$BIOS_MAKE_ROOTPART_FS" && $($BIOS_MAKE_ROOTPART_FS) && \
+  echo "$BIOS_MAKE_BOOTPART" && $BIOS_MAKE_BOOTPART && \
+  echo "$BIOS_SET_BOOT_ON" && $BIOS_SET_BOOT_ON && \
+  echo "$BIOS_MAKE_BOOTPART_FS" && $BIOS_MAKE_BOOTPART_FS && \
+  echo "$BIOS_MAKE_ROOTPART" && $BIOS_MAKE_ROOTPART && \
+  echo "$BIOS_MAKE_ROOTPART_FS" && $BIOS_MAKE_ROOTPART_FS && \
   echo "<<*>><<*>><<*>> Partitions BIOS [done]" ||\
   echo "<<*>><<*>><<*>> Partitions BIOS [failed]"
 
 [ $BIOS_TYPE = "uefi" ] && [ $OPTION = "alt-1" ] && \
-  echo "$UEFI_MAKE_BOOTPART" && $($UEFI_MAKE_BOOTPART) && \
-  echo "$UEFI_SET_BOOT_ON" && $($UEFI_SET_BOOT_ON) &&\
-  echo "$UEFI_MAKE_BOOTPART_FS" && $($UEFI_MAKE_BOOTPART_FS) && \
-  echo "$UEFI_MAKE_ROOTPART" && $($UEFI_MAKE_ROOTPART) && \
-  echo "$UEFI_MAKE_ROOTPART_FS" && $($UEFI_MAKE_ROOTPART_FS) \
+  echo "$UEFI_MAKE_BOOTPART" && $UEFI_MAKE_BOOTPART && \
+  echo "$UEFI_SET_BOOT_ON" && $UEFI_SET_BOOT_ON &&\
+  echo "$UEFI_MAKE_BOOTPART_FS" && $UEFI_MAKE_BOOTPART_FS && \
+  echo "$UEFI_MAKE_ROOTPART" && $UEFI_MAKE_ROOTPART && \
+  echo "$UEFI_MAKE_ROOTPART_FS" && $UEFI_MAKE_ROOTPART_FS \
   echo "<<*>><<*>><<*>> Partitions UEFI [done]" || \
   echo "<<*>><<*>><<*>> Partitions UEFI [failed]"
 
