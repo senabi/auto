@@ -5,11 +5,11 @@
 ## lsblk
 # master boot record/ uefi
 dirpath=$(cd $(dirname $0); pwd -P)
-echo "$dirpath/variables.sh"
+echo "Reading $dirpath/variables.sh"
 . "$dirpath/variables.sh"
 
 [ $BIOS_TYPE = "bios" ] && \
-#  && parted /dev/$DISK1 mklabel msdos \
+  parted /dev/$DISK1 mklabel msdos && \
   echo "==> Label: MSDOS [done]" || echo "==> Label: MSDOS [failed]"
   
 [ $BIOS_TYPE = "uefi" ] && \

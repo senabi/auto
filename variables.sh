@@ -2,6 +2,7 @@
 
 
 #FS="ext4"
+[ -d /sys/firmware/efi ] && BIOS_TYPE="uefi" ||  BIOS_TYPE="bios"
 FS="btrfs"
 
 #Disk where partitions will be done
