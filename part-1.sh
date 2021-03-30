@@ -72,7 +72,9 @@ mount /dev/$ROOT_PART /mnt && \
 
 ## Installation
 
+genfstab -U /mnt >> /mnt/etc/fstab
+cp $dirpath/part-2.sh /mnt/opt
+
 ## Inside root_partition
 # Configure the system
-genfstab -U /mnt >> /mnt/etc/fstab
-arch-chroot /mnt "$dirpath/part-2.sh"
+ arch-chroot /mnt /mnt/opt/part-2.sh

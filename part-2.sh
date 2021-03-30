@@ -1,8 +1,8 @@
 #!/bin/sh
-
 ## In /mnt
-dirpath=$(cd $(dirname $0); pwd -P)
-. "$dirpath/variables.sh"
+
+# Disk
+DISK1="sda"
 
 # Time zone
 ln -sf /usr/share/zoneinfo/US/Central /etc/localtime && \
