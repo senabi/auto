@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/sh
 
 ## In /mnt
 dirpath=$(cd $(dirname $0); pwd -P)

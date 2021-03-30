@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/sh
 
 ## Boot Mode
 [ -d /sys/firmware/efi ] && BIOS_TYPE="uefi" ||  BIOS_TYPE="bios"

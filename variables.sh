@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/sh
 
 
 FS="ext4"
@@ -7,7 +7,7 @@ FS="btrfs"
 #Disk where partitions will be done
 #NO SWAP, 
 DISK1="sda"
-BOOT_PART="${DISK1}2"
+BOOT_PART="${DISK1}1"
 OPTION="alt-1"
 #OPTION="alt-1" "alt-2"
 #DISK2="vda"
