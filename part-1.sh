@@ -48,7 +48,7 @@ PARTED="parted /dev/"
 
 lsblk
 
-mount /dev/$DISK1 /mnt && \
+mount /dev/$ROOT_PART /mnt && \
   mkdir /mnt/boot && \
   mount /dev/$BOOT_PART /mnt/boot && \
   echo "==> Mounted partitions [done]" && \
