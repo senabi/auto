@@ -52,7 +52,8 @@ mount /dev/$ROOT_PART /mnt && \
   mkdir -p /mnt/boot && \
   mount /dev/$BOOT_PART /mnt/boot && \
   echo "==> Mounted partitions [done]" && \
-  pacstrap /mnt base base-devel linux-lts linux-lts-headers linux-firmware || \
+  pacstrap /mnt base base-devel linux-lts linux-lts-headers linux-firmware && \
+  cp $dirpath/part-2.sh /mnt/opt || \
   echo "==> Mounted partitions [failed]" \
     && umount /dev/$ROOT_PART && umount /dev/$BOOT_PART
 
@@ -71,9 +72,7 @@ mount /dev/$ROOT_PART /mnt && \
 # swapon /dev/swap_partition
 
 ## Installation
-
 genfstab -U /mnt >> /mnt/etc/fstab
-cp $dirpath/part-2.sh /mnt/opt
 
 ## Inside root_partition
 # Configure the system
