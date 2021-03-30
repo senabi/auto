@@ -3,6 +3,7 @@
 
 # Disk
 DISK1="sda"
+HOSTNAME="wicked"
 
 # Time zone
 ln -sf /usr/share/zoneinfo/US/Central /etc/localtime && \
@@ -17,7 +18,7 @@ echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
   echo "==> Localization [done]"
 
 # Network config
-echo "WICKED" > /etc/hostname && \
+echo "$HOSTNAME" > /etc/hostname && \
   echo "==> Network config [done]"
 
 pacman -S --noconfirm grub networkmanager && \
