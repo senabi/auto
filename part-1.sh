@@ -64,10 +64,8 @@ mount /dev/$ROOT_PART /mnt && \
   mkdir -p /mnt/boot && \
   mount /dev/$BOOT_PART /mnt/boot && \
   echo "$SPACER Mounted partitions [done]" && \
-    pacstrap /mnt base base-devel linux-lts linux-lts-headers linux-firmware && \
-    MOUNTING="done" || \
+    pacstrap /mnt base base-devel linux-lts linux-lts-headers linux-firmware || \
   echo "$SPACER Mounted partitions [failed]" && \
-    MOUNTING="failed" && umount -R /mnt 
 
 ## BOOT NO-SWAP
 # /boot = 1GiB
@@ -89,9 +87,9 @@ sleep 2
 
 ## Inside root_partition
 # Configure the system
-[ $MOUNTING = "done" ] && cp $dirpath/part-2.sh /mnt/opt && \
-  genfstab -U /mnt >> /mnt/etc/fstab && \
-  arch-chroot /mnt /mnt/opt/part-2.sh && \
-  umount -R /mnt
+cp $dirpath/part-2.sh /mnt/opt && \
+genfstab -U /mnt >> /mnt/etc/fstab && \
+arch-chroot /mnt /mnt/opt/part-2.sh && \
+umount -R /mnt
 
 echo "$SPACER If everything is OK reboot"
