@@ -9,10 +9,12 @@ echo "Reading $dirpath/variables.sh"
 . "$dirpath/variables.sh"
 
 [ $BIOS_TYPE = "bios" ] && \
+  echo "parted /dev/$DISK1 mklabel msdos" && \
   parted /dev/$DISK1 mklabel msdos && \
   echo "==> Label: MSDOS [done]" || echo "==> Label: MSDOS [failed]"
   
 [ $BIOS_TYPE = "uefi" ] && \
+  echo "parted /dev/$DISK1 mklabel gpt" && \
   parted /dev/$DISK1 mklabel gpt && \
   echo "==> Label: GPT [done]" || echo "==> Label: GPT [failed]"
 
@@ -22,10 +24,15 @@ echo "Reading $dirpath/variables.sh"
 PARTED="parted /dev/"
 
 [ $BIOS_TYPE = "bios" ] && [ $OPTION = "alt-1" ] && \
+  echo "$PARTED$DISK1 mkpart primary $FS 0% 1GiB" && \
   $PARTED$DISK1 mkpart primary $FS 0% 1GiB && \
+  echo "$PARTED$DISK1 set 1 boot on" && \
   $PARTED$DISK1 set 1 boot on && \
+    echo "mkfs.$FS /dev/${DISK1}1" && \
     mkfs.$FS /dev/${DISK1}1 && \
+  echo "$PARTED$DISK1 mkpart primary $FS 1GiB 100%" && \
   $PARTED$DISK1 mkpart primary $FS 1GiB 100% && \
+    echo "mkfs.$FS /dev/${DISK1}2" && \
     mkfs.$FS /dev/${DISK1}2 && \
   echo "==> Partitions BIOS [done]" ||\
   echo "==> Partitions BIOS [failed]"
