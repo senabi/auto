@@ -25,4 +25,6 @@ pacman -S --noconfirm grub networkmanager && \
   grub-mkconfig -o /boot/grub/grub.cfg && \
   echo "==> Bootloader GRUB [done]"
 
+systemctl enable NetworkManager
+
 passwd
