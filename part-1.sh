@@ -49,11 +49,12 @@ PARTED="parted /dev/"
 lsblk
 
 mount /dev/$ROOT_PART /mnt && \
-  mkdir /mnt/boot && \
+  mkdir -p /mnt/boot && \
   mount /dev/$BOOT_PART /mnt/boot && \
   echo "==> Mounted partitions [done]" && \
   pacstrap /mnt base base-devel linux-lts linux-lts-headers linux-firmware || \
-  echo "==> Mounted partitions [failed]"
+  echo "==> Mounted partitions [failed]" \
+    && umount /dev/$ROOT_PART && umount /dev/$BOOT_PART
 
 ## BOOT NO-SWAP
 # /boot = 1GiB
