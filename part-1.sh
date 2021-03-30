@@ -24,13 +24,17 @@ PARTED="parted /dev/"
 [ $BIOS_TYPE = "bios" ] && [ $OPTION = "alt-1" ] && \
   $PARTED$DISK1 mkpart primary $FS 0% 1GiB && \
   $PARTED$DISK1 set 1 boot on && \
+    mkfs.$FS /dev/${DISK1}1 && \
   $PARTED$DISK1 mkpart primary $FS 1GiB 100% && \
+    mkfs.$FS /dev/${DISK1}2 && \
   echo "==> Partitions BIOS [done]" ||\
   echo "==> Partitions BIOS [failed]"
 
 [ $BIOS_TYPE = "uefi" ] && [ $OPTION = "alt-1" ] && \
-  $PARTED$DISK1 set 1 esp on && \
   $PARTED$DISK1 mkpart "EFI system partition" fat32 0% 261MiB && \
+    mkfs.fat32 /dev/${DISK1}1 && \
+  $PARTED$DISK1 set 1 esp on && \
+    mkfs.$FS /dev/${DISK1}2 && \
   $PARTED$DISK1 mkpart "root partition" $FS 261MiB 100% && \
   echo "==> Partitions UEFI [done]" || \
   echo "==> Partitions BIOS [failed]"
